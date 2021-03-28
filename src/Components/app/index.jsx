@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Header from '../Header';
+import Header from '../header';
 import AboutPage from '../../pages/AboutPage';
 import HomePage from '../../pages/HomePage';
 
