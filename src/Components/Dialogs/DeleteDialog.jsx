@@ -12,6 +12,7 @@ export default function DeleteDialog({
 }) {
   return (
     <Dialog
+      onClose={handleClose}
       open={isOpen}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"

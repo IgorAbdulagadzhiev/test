@@ -20,24 +20,24 @@ const ActionButton = ({ onClick, title, ...restProps }) => {
   );
 };
 
-export const EditAction = props => (
+export const EditAction = (props) => (
   <ActionButton size="small" color="primary" {...props}>
     <CreateIcon />
   </ActionButton>
 );
 
-export const DeleteAction = props => (
+export const DeleteAction = (props) => (
   <ActionButton size="small" color="primary" {...props}>
     <DeleteIcon />
   </ActionButton>
 );
 
-export const AddAction = ({ title="создать", ...props}) => (
+export const AddAction = ({ title = "создать", ...props }) => (
   <ActionButton title={title} {...props}>
     <AddIcon />
   </ActionButton>
 );
 
 ActionButton.defaultProps = {
-  onClick: () => { }
+  onClick: () => {},
 };

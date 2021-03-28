@@ -4,7 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Select from "@material-ui/core/Select";
 
 import EmployeesService from "../../services/employees-service.js";
 import { makeStyles } from "@material-ui/core";
@@ -17,15 +16,21 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: "flex",
     flexDirection: "column",
-    maxWidth: 500,
+    width: 500,
     padding: "0 20px 20px 20px",
   },
   field: {
     margin: theme.spacing(1),
     minWidth: 220,
   },
+  buttonContainer: {
+    marginTop: 20,
+  },
   button: {
     maxWidth: 150,
+    "&:not(:last-of-type)": {
+      marginRight: 10,
+    },
   },
   item: {
     minHeight: 36,
@@ -101,9 +106,9 @@ const EmployeeForm = ({ handleClose, data, callback }) => {
           error={formik.touched.fullname && Boolean(formik.errors.fullname)}
           helperText={formik.touched.fullname && formik.errors.fullname}
         />
-        <Select
+        <TextField
+          select
           className={classes.field}
-          defaultValue=""
           id="position"
           name="position"
           label="Должность"
@@ -118,10 +123,10 @@ const EmployeeForm = ({ handleClose, data, callback }) => {
               {item}
             </MenuItem>
           ))}
-        </Select>
-        <Select
+        </TextField>
+        <TextField
+          select
           className={classes.field}
-          defaultValue=""
           id="subdivision"
           name="subdivision"
           label="Подразделение"
@@ -138,7 +143,7 @@ const EmployeeForm = ({ handleClose, data, callback }) => {
               {item}
             </MenuItem>
           ))}
-        </Select>
+        </TextField>
         <TextField
           className={classes.field}
           id="email"
@@ -159,7 +164,7 @@ const EmployeeForm = ({ handleClose, data, callback }) => {
           error={formik.touched.phone && Boolean(formik.errors.phone)}
           helperText={formik.touched.phone && formik.errors.phone}
         />
-        <div>
+        <div className={classes.buttonContainer}>
           <Button
             color="primary"
             variant="contained"

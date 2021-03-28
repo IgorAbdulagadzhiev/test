@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const AboutPage = () => {
-  return (
-    <div>Произвольная страница</div>
-  )
-}
+  return <div>Произвольная страница</div>;
+};
 
 export default AboutPage;

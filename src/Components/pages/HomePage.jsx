@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
 import Table from "../Table/Table";
 
 const HomePage = () => {
-  return (
-    <Table />
-  )
-}
+  return <Table />;
+};
 
 export default HomePage;
