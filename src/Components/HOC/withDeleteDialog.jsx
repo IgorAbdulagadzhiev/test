@@ -6,9 +6,7 @@ const withDeleteDialog = (WrappedComponent) => {
   return class extends React.Component {
     state = {
       name: "этот объект",
-
       isOpen: false,
-
       deleteAction: null,
     };
 
@@ -21,18 +19,14 @@ const withDeleteDialog = (WrappedComponent) => {
     onOpenDeleteDialog = (deleteAction, name = "этот объект") => {
       this.setState({
         isOpen: true,
-
         name,
-
         deleteAction,
       });
     };
 
     onDelete = () => {
       const { deleteAction } = this.state;
-
       deleteAction();
-
       this.onCloseDeleteDialog();
     };
 
@@ -45,7 +39,6 @@ const withDeleteDialog = (WrappedComponent) => {
             onOpenDeleteDialog={this.onOpenDeleteDialog}
             {...this.props}
           />
-
           <DeleteDialog
             handleCloseOk={this.onDelete}
             handleClose={this.onCloseDeleteDialog}

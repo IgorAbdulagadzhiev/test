@@ -13,12 +13,10 @@ export default function DeleteDialog({
   return (
     <Dialog
       open={isOpen}
-      onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">{`Вы действительно хотите удалить ${name}?`}</DialogTitle>
-
       <DialogActions>
         <Button onClick={handleCloseOk} color="primary">
           Да

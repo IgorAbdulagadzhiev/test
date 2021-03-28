@@ -1,33 +1,15 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
-import { EditAction, DeleteAction } from "./TableActions";
+import { EditAction, DeleteAction, AddAction } from "./TableActions";
 import withDeleteDialog from "../HOC/withDeleteDialog";
+import withEmployeeDialog from "../HOC/withEmployeeDialog";
 
 import EmployeesService from "../../services/employees-service.js";
 
 const employeesService = new EmployeesService();
 
-const Table = ({ onOpenDeleteDialog }) => {
-  const data = [
-    {
-      id: 1,
-      fullname: "Иванов Иван Иванович",
-      position: "Директор",
-      subdivision: "Разработка",
-      email: "123@123.123",
-      phone: "88005553535",
-    },
-    {
-      id: 2,
-      fullname: "Иванов Петр Иванович",
-      position: "Разработчик",
-      subdivision: "Разработка",
-      email: "123@123.123",
-      phone: "88005553535",
-    },
-  ];
-
-  const [employees, setEmployees] = React.useState(data);
+const Table = ({ onOpenDeleteDialog, onOpenDialog }) => {
+  const [employees, setEmployees] = React.useState();
 
   React.useEffect(() => {
     employeesService.getEmployees().then((result) => {
@@ -35,23 +17,33 @@ const Table = ({ onOpenDeleteDialog }) => {
     });
   }, []);
 
+  const deleteEmployee = (id) =>
+    employeesService.deleteEmployee(id).then(() => {
+      employeesService.getEmployees().then((result) => {
+        setEmployees(result);
+      });
+    });
+
   const renderActionColumn = (id) => {
+    const idx = employees.findIndex((el) => el.id === id);
     return (
       <>
-        <EditAction title="Редактировать" onClick={() => {}} />
+        <EditAction
+          onClick={() => {
+            onOpenDialog(
+              `редактирование сотрудника ${employees[idx].fullname}`,
+              employees[idx],
+              setEmployees
+            );
+          }}
+          title="Редактировать"
+        />
         <DeleteAction
           title="Удалить"
           onClick={() =>
-            onOpenDeleteDialog(() =>
-              employeesService.deleteEmployee(id).then(() => {
-                const idx = employees.findIndex((el) => el.id === id);
-                const newEmployees = [
-                  ...employees.slice(0, idx),
-                  ...employees.slice(idx + 1),
-                ];
-                setEmployees(newEmployees);
-              }
-              )
+            onOpenDeleteDialog(
+              () => deleteEmployee(id),
+              `сотрудника ${employees[idx].fullname}`
             )
           }
         />
@@ -118,6 +110,15 @@ const Table = ({ onOpenDeleteDialog }) => {
     filterType: "textField",
     selectableRowsHeader: false,
     selectableRows: "none",
+    customToolbar: () => (
+      <React.Fragment>
+        <AddAction
+          onClick={() => {
+            onOpenDialog("Создание сотрудника", {}, setEmployees);
+          }}
+        ></AddAction>
+      </React.Fragment>
+    ),
     textLabels: {
       body: {
         toolTip: "Сортировка",
@@ -153,4 +154,4 @@ const Table = ({ onOpenDeleteDialog }) => {
   );
 };
 
-export default withDeleteDialog(Table);
+export default withEmployeeDialog(withDeleteDialog(Table));
